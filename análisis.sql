@@ -17,8 +17,8 @@ order by total_bought desc
 limit 5;
 -- ventas totales por mes
 select
-	to_char(o.order_date,'YYYYMM'),
-	sum(coalesce(o.quantity * p.price_ars,0))
+	to_char(o.order_date,'YYYYMM') as month_period,
+	sum(coalesce(o.quantity * p.price_ars,0)) as month_sum
 from
 	orders o inner join products p on o.product_id = p.product_id
 group by to_char(o.order_date,'YYYYMM');
@@ -26,6 +26,8 @@ group by to_char(o.order_date,'YYYYMM');
 select
 	p.product_id,
 	p.product_name,
+	p.author,
+	p.genre,
 	sum(coalesce(o.quantity,0)) as sum_books
 from
 	orders o inner join
@@ -36,19 +38,20 @@ group by
 order by sum_books asc
 limit 3;
 -- ranking de pedidos por categoría
+with
+genre_total as (
+	select
+		p.genre,
+		sum(coalesce(o.quantity,0)) as total_books
+	from
+		orders o inner join products p on o.product_id = p.product_id
+	group by p.genre
+)
 select
-	o.order_id,
-	o.client_id,
-	p.product_id,
-	p.genre,
-	p.price_ars,
-	o.quantity,
-	coalesce(o.quantity * p.price_ars,0) as total_sale,
-	o.order_date,
-	row_() over (
-		partition by genre
-		order by coalesce(o.quantity * p.price_ars,0) desc
+	*,
+	rank() over (
+		order by total_books desc
 	) as ranking
 from
-	orders o inner join products p on o.product_id = p.product_id
+	genre_total
 order by ranking asc;
