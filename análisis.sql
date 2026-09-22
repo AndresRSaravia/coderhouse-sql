@@ -45,7 +45,7 @@ select
 	o.quantity,
 	coalesce(o.quantity * p.price_ars,0) as total_sale,
 	o.order_date,
-	row_number() over (
+	row_() over (
 		partition by genre
 		order by coalesce(o.quantity * p.price_ars,0) desc
 	) as ranking
