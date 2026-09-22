@@ -9,7 +9,7 @@
 Orden de ejecución:  `estructura.sql` $\rightarrow$ `analisis.sql`
 
 ## Introducción
-Somos un analista de datos para una incipiente tienda mayorista de libros. Se nos ha asignado la tarea de revisar las ventas de entre los meses de junio, julio y agosto de libros de autores hispanos. Entre las consultas, se busca saber:
+Somos un analista de datos que trabaja para una incipiente tienda mayorista de libros. Se nos ha asignado la tarea de revisar las ventas entre los meses de junio, julio y agosto de libros de autores hispanos. Entre las consultas, se busca saber:
 1. Top 5 clientes por gasto total: Los cinco clientes que más han gastado en la tienda en todo el periodo.
 2. Ventas totales por mes: La suma de todas las ventas segmentada por cada mes.
 3. Top 3 libros menos vendidos: Los tres libros que menos se hayan vendido.
